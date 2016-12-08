@@ -55,7 +55,7 @@ function cc(){
          .attr("y", 300)
          .text("Tonnes Consumed");
     
-    d3.json("realfinaljson.json", function(error, globe) {
+    d3.json("https://github.com/brendanboon/tea-coffee/blob/master/realfinaljson.json", function(error, globe) {
         svg.selectAll("country")
         .data(topojson.feature(globe, globe.objects.countries).features)
         .enter().insert("path")
@@ -125,7 +125,7 @@ function tc(){
          .attr("y", 300)
          .text("Tonnes Consumed");
     
-    d3.json("realfinaljson.json", function(error, globe) {
+    d3.json("https://github.com/brendanboon/tea-coffee/blob/master/realfinaljson.json", function(error, globe) {
         svg.selectAll("country")
         .data(topojson.feature(globe, globe.objects.countries).features)
         .enter().insert("path")
@@ -196,7 +196,7 @@ function cp(){
          .attr("y", 300)
          .text("Grams/Capita/Day");
     
-    d3.json("realfinaljson.json", function(error, globe) {
+    d3.json("https://github.com/brendanboon/tea-coffee/blob/master/realfinaljson.json", function(error, globe) {
         svg.selectAll("country")
         .data(topojson.feature(globe, globe.objects.countries).features)
         .enter().insert("path")
@@ -265,7 +265,7 @@ function tp(){
          .attr("y", 300)
          .text("Grams/Capita/Day");
     
-    d3.json("realfinaljson.json", function(error, globe) {
+    d3.json("https://github.com/brendanboon/tea-coffee/blob/master/realfinaljson.json", function(error, globe) {
         svg.selectAll("country")
         .data(topojson.feature(globe, globe.objects.countries).features)
         .enter().insert("path")
