@@ -113,7 +113,7 @@ function tc(){
      
     var colors = [1000, 10000, 20000, 50000, 100000, 150000, 200000, 400000]
     var keycolors = [0, 1000, 10000, 20000, 50000, 100000, 150000, 200000, 400000]
-    var key_labels = ["0", "1000", "10000", "20000", "50000", "100000", "1500000", "200000", "400000"];    
+    var key_labels = ["0", "1000", "10000", "20000", "50000", "100000", "150000", "200000", "400000"];    
 
     var color = d3.scale.threshold()
         .domain(colors)
@@ -182,9 +182,9 @@ function cp(){
     d3.select("body").transition();
     
     // key
-    var colors = [1, 5, 8, 10, 15, 20, 25, 30]
-    var keycolors = [0, 1, 5, 8, 10, 15, 20, 25, 30]
-    var key_labels = ["0", "1", "5", "8", "10", "15", "20", "25", "30"];    
+    var colors = [1, 5, 8, 10, 15, 17, 20, 22]
+    var keycolors = [0, 1, 5, 8, 10, 15, 17, 20, 22]
+    var key_labels = ["0", "1", "5", "8", "10", "15", "17", "20", "22"];    
 
     var color = d3.scale.threshold()
         .domain(colors)
