@@ -26,7 +26,7 @@ function cc(){
     // legend
     var color_domain = [100, 40000, 50000, 75000, 100000, 200000, 350000, 500000]
     var ext_color_domain = [0, 100, 40000, 50000, 75000, 100000, 200000, 350000, 500000]
-    var legend_labels = [0, 100, 40000, 50000, 75000, 100000, 200000, 350000, 500000];    
+    var legend_labels = ["0", "100", "40000", "50000", "75000", "100000", "200000", "350000", "500000"];    
 
     var color = d3.scale.threshold()
         .domain(color_domain)
@@ -96,7 +96,7 @@ function tc(){
     // legend for tea consumption   
     var color_domain = [1000, 10000, 20000, 50000, 100000, 1500000, 200000, 400000]
     var ext_color_domain = [0, 1000, 10000, 20000, 50000, 100000, 1500000, 200000, 400000]
-    var legend_labels = [0, 1000, 10000, 20000, 50000, 100000, 1500000, 200000, 400000];    
+    var legend_labels = ["0", "1000", "10000", "20000", "50000", "100000", "1500000", "200000", "400000"];    
 
     var color = d3.scale.threshold()
         .domain(color_domain)
@@ -167,7 +167,7 @@ function cp(){
     // legend
     var color_domain = [1, 5, 8, 10, 15, 20, 25, 30]
     var ext_color_domain = [0, 1, 5, 8, 10, 15, 20, 25, 30]
-    var legend_labels = [0, 1, 5, 8, 10, 15, 20, 25, 30];    
+    var legend_labels = ["0", "1", "5", "8", "10", "15", "20", "25", "30"];    
 
     var color = d3.scale.threshold()
         .domain(color_domain)
@@ -236,7 +236,7 @@ function tp(){
     
     var color_domain = [0.5, 1, 2, 3, 4, 5, 6, 7]
     var ext_color_domain = [0, 0.5, 1, 2, 3, 4, 5, 6, 7]
-    var legend_labels = [0, 0.5, 1, 2, 3, 4, 5, 6, 7];
+    var legend_labels = ["0", "0.5", "1", "2", "3", "4", "5", "6", "7"];
     
      var color = d3.scale.threshold()
         .domain(color_domain)
