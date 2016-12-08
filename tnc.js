@@ -94,9 +94,9 @@ function tc(){
     d3.select("svg").transition().duration(300);
     
     // legend for tea consumption   
-    var color_domain = [50, 100, 200, 500, 1000, 5000, 10000, 50000]
-    var ext_color_domain = [0, 50, 100, 200, 500, 1000, 5000, 10000, 50000]
-    var legend_labels = [0, 50, 100, 200, 500, 1000, 5000, 10000, 50000];    
+    var color_domain = [1000, 10000, 20000, 50000, 100000, 1500000, 200000, 400000]
+    var ext_color_domain = [0, 1000, 10000, 20000, 50000, 100000, 1500000, 200000, 400000]
+    var legend_labels = [0, 1000, 10000, 20000, 50000, 100000, 1500000, 200000, 400000];    
 
     var color = d3.scale.threshold()
         .domain(color_domain)
@@ -165,9 +165,9 @@ function cp(){
     d3.select("body").transition();
     
     // legend
-    var color_domain = [5, 10, 15, 20, 25, 30, 35, 40]
-    var ext_color_domain = [0, 5, 10, 15, 20, 25, 30, 35, 40]
-    var legend_labels = ["0", "5", "10", "15", "20", "25", "30", "35", "40"];    
+    var color_domain = [1, 5, 8, 10, 15, 20, 25, 30]
+    var ext_color_domain = [0, 1, 5, 8, 10, 15, 20, 25, 30]
+    var legend_labels = [0, 1, 5, 8, 10, 15, 20, 25, 30];    
 
     var color = d3.scale.threshold()
         .domain(color_domain)
@@ -234,9 +234,9 @@ function tp(){
     d3.selectAll("path").remove();
     d3.select("body").transition();
     
-    var color_domain = [5, 10, 15, 20, 25, 30, 35, 40]
-    var ext_color_domain = [ 0, 5, 10, 15, 20, 25, 30, 35, 40]
-    var legend_labels = ["0", "5", "10", "15", "20", "25", "30", "35", "40"];
+    var color_domain = [0.5, 1, 2, 3, 4, 5, 6, 7]
+    var ext_color_domain = [0, 0.5, 1, 2, 3, 4, 5, 6, 7]
+    var legend_labels = [0, 0.5, 1, 2, 3, 4, 5, 6, 7];
     
      var color = d3.scale.threshold()
         .domain(color_domain)
