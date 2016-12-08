@@ -95,8 +95,8 @@ function tc(){
     
     // legend for tea consumption   
     var color_domain = [50, 100, 200, 500, 1000, 5000, 10000, 50000]
-    var ext_color_domain = [0, 2500, 7500, 15000, 37500, 75000, 125000, 300000, 1320000]
-    var legend_labels = [0, 2500, 7500, 15000, 37500, 75000, 125000, 300000, 1320000];    
+    var ext_color_domain = [0, 50, 100, 200, 500, 1000, 5000, 10000, 50000]
+    var legend_labels = [0, 50, 100, 200, 500, 1000, 5000, 10000, 50000];    
 
     var color = d3.scale.threshold()
         .domain(color_domain)
