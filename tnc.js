@@ -72,7 +72,7 @@ function cc(){
 
             div .html(				
                     "<div style=\"text-align:center\">" +"<b>" +  d.properties.country + "</b>" +  "</div>" +
-                    "<div style=\"float: left\">" + "Coffee Consumed (Tonnes): " + "</div>" +  "<div style=\"float:right\">" + d.properties.cc
+                    "<div style=\"float: left\">" + "Coffee Consumed in 2011(Tonnes): " + "</div>" +  "<div style=\"float:right\">" + d.properties.cc
              )  
             .style("left", (d3.event.pageX) + "px")     
             .style("top", (d3.event.pageY - 28) + "px");
@@ -142,7 +142,7 @@ function tc(){
 
             div .html(				
                     "<div style=\"text-align:center\">" +"<b>" +  d.properties.country + "</b>" +  "</div>" +
-                    "<div style=\"float: left\">" + "Tea Consumed (Tonnes): " + "</div>" +  "<div style=\"float:right\">" + d.properties.tc
+                    "<div style=\"float: left\">" + "Tea Consumed in 2011(Tonnes): " + "</div>" +  "<div style=\"float:right\">" + d.properties.tc
              )  
             .style("left", (d3.event.pageX) + "px")     
             .style("top", (d3.event.pageY - 28) + "px");
@@ -213,7 +213,7 @@ function cp(){
 
             div .html(				
                     "<div style=\"text-align:center\">" +"<b>" +  d.properties.country + "</b>" +  "</div>" +
-                    "<div style=\"float: left\">" + "Coffee Consumed Per Person: " + "</div>" +  "<div style=\"float:right\">" + d.properties.cp
+                    "<div style=\"float: left\">" + "Grams of Coffee Consumed Per Person Per Day: " + "</div>" +  "<div style=\"float:right\">" + d.properties.cp
              )  
             .style("left", (d3.event.pageX) + "px")     
             .style("top", (d3.event.pageY - 28) + "px");
@@ -282,7 +282,7 @@ function tp(){
 
             div .html(				
                     "<div style=\"text-align:center\">" +"<b>" +  d.properties.country + "</b>" +  "</div>" +
-                    "<div style=\"float: left\">" + "Tea Consumed Per Person: " + "</div>" +  "<div style=\"float:right\">" + d.properties.tp
+                    "<div style=\"float: left\">" + "Grams of Tea Consumed Per Person Per Day: " + "</div>" +  "<div style=\"float:right\">" + d.properties.tp
              )  
             .style("left", (d3.event.pageX) + "px")     
             .style("top", (d3.event.pageY - 28) + "px");
