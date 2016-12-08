@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <title>Tea & Coffee</title>
-
-<h1 style = "text-align:center; color:black; font-family:Helvetica; font-weight: normal;"> Global Tea & Coffee Consumption </h1>
-
+<!--Title-->
+<h1 style = "text-align:center; color:black; font-family:Helvetica; font-weight: normal;"> Global Tea & Coffee Consumption, 2011 </h1>
+<!--Intro-->
       <h4 style = "text-align:center; color:black; font-family:Helvetica; font-weight: lighter;">Whether or not your country qualifies as a 'tea' or 'coffee' country is based more on history than one might think. Many coffee producing countries are also coffee consuming countries, and many tea producing countries, and countries along the Silk Road, are coffee countries. This visualization includes consumption of South American 'Yerba Mate,' which explains much of the region's tea consumption.</h4>
-
+<!--Reference to CSS-->
 <link rel="stylesheet" type="text/css" href="tncstyle.css">
-<body>
 
+
+<body>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/d3.geo.projection.v0.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
 <script src="tnc.js"></script> 
-	<table style="margin-left:10%;">
+    
+<!--Places SVG (area), with list of buttons on the right-->
+	<table style="margin-left:5%;">
   <tr>
     <td>
 		<div id="area" style="float:right;"></div> </td>
@@ -27,20 +30,28 @@
 		</td>
 		  </tr>
 	</table>
+    
+    
+    
 <script>
+//creation of margins
 var margin = {top: -5, right: -5, bottom: -5, left: -5},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;  
     
+    
+    
+//Scaling, taken from Bostock's example
 var x = d3.scale.linear()
     .domain([-width / 2, width / 2])
     .range([0, width]);
-    
     
 var y = d3.scale.linear()
     .domain([-height / 2, height / 2])
     .range([height, 0]);
     
+    
+//Projection, taken from Bostock's example. I used Mercator because The flat world works best for my project.
 var projection = d3.geo.mercator()
         .scale(150)
         .translate([width / 2, height / 2]),
@@ -49,13 +60,16 @@ var projection = d3.geo.mercator()
     
 var path = d3.geo.path()
     .projection(projection);
+
     
+    //I had some trouble with the zoom function, so the next few sections may be hard to follow - in the end, I took out '.call(zoom)', but the map will still pan based on which country you click.
 var zoom = d3.behavior.zoom()
     .translate(projection.translate())
     .scale(projection.scale())
     .scaleExtent([height, 8 * height])
     .on("zoom", zoomed);
     
+    //Dimensions of the SVG
 var svg = d3.selectAll("body")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -67,7 +81,7 @@ var svg = d3.selectAll("body")
 var g = svg.append("g");
 
 
-    
+//When an item is clicked, the map will translate the entire visualization to center on the item    
 function clicked(d) {
   var centroid = path.centroid(d),
       translate = projection.translate();
@@ -79,39 +93,46 @@ function clicked(d) {
 
   zoom.translate(projection.translate());
 
+    //How long it takes to translate
   svg.selectAll("path").transition()
       .duration(700)
       .attr("d", path);
 }
 
+    //Post-click function translation
 function zoomed() {
   projection.translate(d3.event.translate).scale(d3.event.scale);
   svg.selectAll("path").attr("d", path);
 }
 
+    //The creation of the svg area without the margins
 var svg = d3.select("#area").append("svg")
     .attr("width", width)
     .attr("height", height)
 
-
+//Tooltip DIV
 var div = d3.select("body").append("div")   
     .attr("class", "tooltip")               
     .style("opacity", 0);	
     
     
-
+//When the program starts, it will go to function CC.
 window.onload = cc; 
-
 </script>
     
 
+    
+    <!--FILES SUBMITTED, DATA SOURCES, REFERENCES-->
 <div class="container"  style ="text-align: center; font-family: Helvetica; font-weight: lighter;">
-   <div class="column-center"><b>All data drawn from: </b><br><a href="http://www.fao.org/faostat/en/#data/CC">Food and Agriculture Organization of the United Nations</a>. In order to find the statistics I needed, I clicked on 'all countries,' and picked food supply for coffee & tea products.   </div>
+   <div class="column-center"><b>All data drawn from: </b><br><a href="http://www.fao.org/faostat/en/#data/CC">Food and Agriculture Organization of the United Nations</a>. In order to find the statistics I needed, I clicked on 'all countries,' and picked food supply for coffee & tea products. Note that the year 2011 was chosen because more recent years have data on less countries.  </div>
    <div class="column-left"><b>Files submitted</b>:<br>index.html<br>tnc.js<br>tncstyle.css<br>realfinaldata.csv<br>realfinaljson.json</div>
    <div class="column-right"><b>Data Sources:</b>
        <br><a href="https://bost.ocks.org/mike/map/">Let's Make A Map - Mike Bostock </a>
        <br><a href="https://bl.ocks.org/mbostock/5562380">California Population Density - Mike Bostock</a>
        <br><a href="https://ecommons.ucsc.edu/access/content/group/7fd5e67a-ae7e-4438-85a0-7bcf336554e2/Lecture%203%3A%20Pitch%20the%20Final%20Project%20Idea/CreatingGeoMapsinD3PartII.pdf">Creating GeoMaps in D3 (Part II)</a>
-       <br><a href="https://github.com/d3/d3-3.x-api-reference/blob/master/Zoom-Behavior.md">Zoom Behavior</a><br><a href="https://github.com/afswift/CMPS165/blob/gh-pages/d3-zoom-pan-extent.js">A Very Complex Zoom Function - Mike Bostock</a></div>
+       <br><a href="https://github.com/d3/d3-3.x-api-reference/blob/master/Zoom-Behavior.md">Zoom Behavior</a><br><a href="http://data-map-d3.readthedocs.io/en/latest/steps/step_04.html">Adding Color to Data Maps</a></div>
 </div>    
+    <br>
+    <br>
+    <h4 style = "text-align:center; color:black; font-family:Helvetica; font-weight: lighter;">Created by Brendan Boon in Collaboration with Suresh Lodha & Ryan Brounley for CMPS165</h4>
 </body>

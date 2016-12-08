@@ -1,69 +1,79 @@
+var keywidth = 20,
+    keyheight = 20;
 
+
+//Creates the range that domain and range that will be represented by color, referencing CSS color scheme from colorbrewer2.org
 var quantizecc = d3.scale.quantize()
     .domain([0, 1250000])
-    .range(d3.range(9).map(function(i) { return "r" + i + "-9"; }));
+    .range(d3.range(9).map(function(i) { return "c" + i + "-9"; }));
 
 var quantizetc = d3.scale.quantize()
     .domain([0, 1300000])
-    .range(d3.range(9).map(function(i) { return "o" + i + "-9"; }));
+    .range(d3.range(9).map(function(i) { return "t" + i + "-9"; }));
     
 var quantizecp = d3.scale.quantize()
         .domain([0, 72])
-        .range(d3.range(9).map(function(i) { return "r" + i + "-9"; }));
+        .range(d3.range(9).map(function(i) { return "c" + i + "-9"; }));
 
 var quantizetp = d3.scale.quantize()
         .domain([0, 20])
-        .range(d3.range(9).map(function(i) { return "o" + i + "-9"; }));
+        .range(d3.range(9).map(function(i) { return "t" + i + "-9"; }));
 
-var legendwidth = 20,
-    legendheight = 20;
-
+//'Coffee Consumption' function, 
 function cc(){
-    svg.selectAll("g.legend").remove();
+    svg.selectAll("g.key").remove();
     d3.selectAll("path").remove();
     d3.select("svg").transition().duration(300);
     
-    // legend
-    var color_domain = [100, 40000, 50000, 75000, 100000, 200000, 350000, 500000]
-    var ext_color_domain = [0, 100, 40000, 50000, 75000, 100000, 200000, 350000, 500000]
-    var legend_labels = ["0", "100", "40000", "50000", "75000", "100000", "200000", "350000", "500000"];    
+    // Creating the color domain for the map (colors) and for the key (keycolors)
+    var colors = [100, 40000, 50000, 150000, 200000, 270000, 350000, 500000]
+    var keycolors = [0, 100, 40000, 50000, 150000, 200000, 270000, 350000, 500000]
+    var key_labels = ["0", "100", "40000", "50000", "150000", "200000", "270000", "350000", "500000"];    
 
+    //Making the color variable the actual domain for the colors
     var color = d3.scale.threshold()
-        .domain(color_domain)
+        .domain(colors)
         .range(["#fff7ec","#fee8c8","#fdd49e", "#fdbb84", "#fc8d59", "#ef6548", "#d7301f", "#b30000", "#7f0000"]);
 
-    var legend = svg.selectAll("g.legend")
-        .data(ext_color_domain)
-        .enter().append("g")
-        .attr("class", "legend");
-
-    legend.append("rect")
-          .attr("x", 20)
-          .attr("y", function(d, i){ return height - (i*legendheight) - 2*legendheight;})
-          .attr("width", legendwidth)
-          .attr("height", legendheight)
-          .style("fill", function(d, i) { return color(d); })
-        //.style("opacity", 0.8);
-
-    legend.append("text")  
-         .attr("x", 50)
-         .attr("y", function(d, i){ return height - (i*legendheight) - legendheight - 4;})
-         .text(function(d, i){ return legend_labels[i]; });
     
-    legend.append("text")
+    var key = svg.selectAll("g.key")
+        .data(keycolors)
+        .enter().append("g")
+        .attr("class", "key");
+
+    //Drawing the Key, references correct color
+    key.append("rect")
+          .attr("x", 20)
+          .attr("y", function(d, i){ return height - (i*keyheight) - 2*keyheight;})
+          .attr("width", keywidth)
+          .attr("height", keyheight)
+          .style("fill", function(d, i) { return color(d); })
+        ;
+    //Key Label Placement
+    key.append("text")  
+         .attr("x", 50)
+         .attr("y", function(d, i){ return height - (i*keyheight) - keyheight - 4;})
+         .text(function(d, i){ return key_labels[i]; });
+    
+    //Key Key
+    key.append("text")
          .attr("x", 35)
          .attr("y", 300)
-         .text("Tonnes Consumed");
+         .text("Tons Consumed");
     
+    //Importing Data from JSON,
     d3.json("realfinaljson.json", function(error, globe) {
         svg.selectAll("country")
         .data(topojson.feature(globe, globe.objects.countries).features)
+        //Creates path
         .enter().insert("path")
         .attr("class", "country")
         .attr("d", path)
+        //country properties
 		.attr("stroke-width", 1)
 		.attr("stroke", "black")
 		.style()
+        //Tooltip transition
         .on("click", clicked)
         .on("mouseover", function(d, i, test) {
             div.transition()        
@@ -72,7 +82,7 @@ function cc(){
 
             div .html(				
                     "<div style=\"text-align:center\">" +"<b>" +  d.properties.country + "</b>" +  "</div>" +
-                    "<div style=\"float: left\">" + "Coffee Consumed in 2011(Tonnes): " + "</div>" +  "<div style=\"float:right\">" + d.properties.cc
+                    "<div style=\"float: left\">" + "Coffee Consumed in 2011(Tons): " + "</div>" +  "<div style=\"float:right\">" + d.properties.cc
              )  
             .style("left", (d3.event.pageX) + "px")     
             .style("top", (d3.event.pageY - 28) + "px");
@@ -81,49 +91,56 @@ function cc(){
             div .transition()		
                 .duration(300)		
                 .style("opacity", 0);	
-        })     
+        })
+        //Returns
         .attr("class", function(d) { 
             if (d.properties.cc == undefined || d.properties.cc == null) { return "grey" }
             return quantizecc(d.properties.cc*3); });
     })
 }
 
+
+
+//The following three functions follow the exact same format as CC, but draw different 'returns' in during the data import
+
+
+
+//'Tea Consumption' Function
 function tc(){
-    svg.selectAll("g.legend").remove();
+    svg.selectAll("g.key").remove();
     d3.selectAll("path").remove();
     d3.select("svg").transition().duration(300);
-    
-    // legend for tea consumption   
-    var color_domain = [1000, 10000, 20000, 50000, 100000, 1500000, 200000, 400000]
-    var ext_color_domain = [0, 1000, 10000, 20000, 50000, 100000, 1500000, 200000, 400000]
-    var legend_labels = ["0", "1000", "10000", "20000", "50000", "100000", "1500000", "200000", "400000"];    
+     
+    var colors = [1000, 10000, 20000, 50000, 100000, 150000, 200000, 400000]
+    var keycolors = [0, 1000, 10000, 20000, 50000, 100000, 150000, 200000, 400000]
+    var key_labels = ["0", "1000", "10000", "20000", "50000", "100000", "1500000", "200000", "400000"];    
 
     var color = d3.scale.threshold()
-        .domain(color_domain)
+        .domain(colors)
         .range(["#f7fcf5","#e5f5e0","#c7e9c0", "#a1d99b", "#74c476", "#41ab5d", "#238b45", "#006d2c", "#00441b"]);
 
-    var legend = svg.selectAll("g.legend")
-        .data(ext_color_domain)
+    var key = svg.selectAll("g.key")
+        .data(keycolors)
         .enter().append("g")
-        .attr("class", "legend");
+        .attr("class", "key");
 
-    legend.append("rect")
+    key.append("rect")
           .attr("x", 20)
-          .attr("y", function(d, i){ return height - (i*legendheight) - 2*legendheight;})
-          .attr("width", legendwidth)
-          .attr("height", legendheight)
+          .attr("y", function(d, i){ return height - (i*keyheight) - 2*keyheight;})
+          .attr("width", keywidth)
+          .attr("height", keyheight)
           .style("fill", function(d, i) { return color(d); })
-        //.style("opacity", 0.8);
+        ;
 
-    legend.append("text")  
+    key.append("text")  
          .attr("x", 50)
-         .attr("y", function(d, i){ return height - (i*legendheight) - legendheight - 4;})
-         .text(function(d, i){ return legend_labels[i]; });
+         .attr("y", function(d, i){ return height - (i*keyheight) - keyheight - 4;})
+         .text(function(d, i){ return key_labels[i]; });
     
-    legend.append("text")
+    key.append("text")
          .attr("x", 35)
          .attr("y", 300)
-         .text("Tonnes Consumed");
+         .text("Tons Consumed");
     
     d3.json("realfinaljson.json", function(error, globe) {
         svg.selectAll("country")
@@ -142,7 +159,7 @@ function tc(){
 
             div .html(				
                     "<div style=\"text-align:center\">" +"<b>" +  d.properties.country + "</b>" +  "</div>" +
-                    "<div style=\"float: left\">" + "Tea Consumed in 2011(Tonnes): " + "</div>" +  "<div style=\"float:right\">" + d.properties.tc
+                    "<div style=\"float: left\">" + "Tea Consumed in 2011(Tons): " + "</div>" +  "<div style=\"float:right\">" + d.properties.tc
              )  
             .style("left", (d3.event.pageX) + "px")     
             .style("top", (d3.event.pageY - 28) + "px");
@@ -158,40 +175,40 @@ function tc(){
     })
 }
 
-
+//'Coffee per Person' Function
 function cp(){
-    svg.selectAll("g.legend").remove();
+    svg.selectAll("g.key").remove();
     d3.selectAll("path").remove();
     d3.select("body").transition();
     
-    // legend
-    var color_domain = [1, 5, 8, 10, 15, 20, 25, 30]
-    var ext_color_domain = [0, 1, 5, 8, 10, 15, 20, 25, 30]
-    var legend_labels = ["0", "1", "5", "8", "10", "15", "20", "25", "30"];    
+    // key
+    var colors = [1, 5, 8, 10, 15, 20, 25, 30]
+    var keycolors = [0, 1, 5, 8, 10, 15, 20, 25, 30]
+    var key_labels = ["0", "1", "5", "8", "10", "15", "20", "25", "30"];    
 
     var color = d3.scale.threshold()
-        .domain(color_domain)
+        .domain(colors)
         .range(["#fff7ec","#fee8c8","#fdd49e", "#fdbb84", "#fc8d59", "#ef6548", "#d7301f", "#b30000", "#7f0000"]);
 
-      var legend = svg.selectAll("g.legend")
-        .data(ext_color_domain)
+      var key = svg.selectAll("g.key")
+        .data(keycolors)
         .enter().append("g")
-        .attr("class", "legend");
+        .attr("class", "key");
 
-    legend.append("rect")
+    key.append("rect")
           .attr("x", 20)
-          .attr("y", function(d, i){ return height - (i*legendheight) - 2*legendheight;})
-          .attr("width", legendwidth)
-          .attr("height", legendheight)
+          .attr("y", function(d, i){ return height - (i*keyheight) - 2*keyheight;})
+          .attr("width", keywidth)
+          .attr("height", keyheight)
           .style("fill", function(d, i) { return color(d); })
-        //.style("opacity", 0.8);
+        ;
 
-    legend.append("text")  
+    key.append("text")  
          .attr("x", 50)
-         .attr("y", function(d, i){ return height - (i*legendheight) - legendheight - 4;})
-         .text(function(d, i){ return legend_labels[i]; });
+         .attr("y", function(d, i){ return height - (i*keyheight) - keyheight - 4;})
+         .text(function(d, i){ return key_labels[i]; });
     
-    legend.append("text")
+    key.append("text")
          .attr("x", 35)
          .attr("y", 300)
          .text("Grams/Capita/Day");
@@ -229,38 +246,39 @@ function cp(){
     })
 }
 
+//'Tea per Person Function'
 function tp(){
-    svg.selectAll("g.legend").remove();
+    svg.selectAll("g.key").remove();
     d3.selectAll("path").remove();
     d3.select("body").transition();
     
-    var color_domain = [0.5, 1, 2, 3, 4, 5, 6, 7]
-    var ext_color_domain = [0, 0.5, 1, 2, 3, 4, 5, 6, 7]
-    var legend_labels = ["0", "0.5", "1", "2", "3", "4", "5", "6", "7"];
+    var colors = [0.5, 1, 2, 3, 4, 5, 6, 7]
+    var keycolors = [0, 0.5, 1, 2, 3, 4, 5, 6, 7]
+    var key_labels = ["0", "0.5", "1", "2", "3", "4", "5", "6", "7"];
     
      var color = d3.scale.threshold()
-        .domain(color_domain)
+        .domain(colors)
         .range(["#f7fcf5","#e5f5e0","#c7e9c0", "#a1d99b", "#74c476", "#41ab5d", "#238b45", "#006d2c", "#00441b"]);
 
-    var legend = svg.selectAll("g.legend")
-        .data(ext_color_domain)
+    var key = svg.selectAll("g.key")
+        .data(keycolors)
         .enter().append("g")
-        .attr("class", "legend");
+        .attr("class", "key");
 
-    legend.append("rect")
+    key.append("rect")
           .attr("x", 20)
-          .attr("y", function(d, i){ return height - (i*legendheight) - 2*legendheight;})
-          .attr("width", legendwidth)
-          .attr("height", legendheight)
+          .attr("y", function(d, i){ return height - (i*keyheight) - 2*keyheight;})
+          .attr("width", keywidth)
+          .attr("height", keyheight)
           .style("fill", function(d, i) { return color(d); })
-        //.style("opacity", 0.8);
+        ;
 
-    legend.append("text")  
+    key.append("text")  
          .attr("x", 50)
-         .attr("y", function(d, i){ return height - (i*legendheight) - legendheight - 4;})
-         .text(function(d, i){ return legend_labels[i]; });
+         .attr("y", function(d, i){ return height - (i*keyheight) - keyheight - 4;})
+         .text(function(d, i){ return key_labels[i]; });
     
-    legend.append("text")
+    key.append("text")
          .attr("x", 35)
          .attr("y", 300)
          .text("Grams/Capita/Day");
